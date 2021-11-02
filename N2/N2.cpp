@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 using namespace std;
-int main()
+int main() 
 {
     setlocale(0, ""); //Руссифицируем вывод программы
     srand(time(0)); //Генерируем число через время
