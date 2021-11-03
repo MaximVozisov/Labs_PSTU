@@ -2,4 +2,4 @@
 <h3>Олимпиандные задачи на 30.10.2021</h3>
 1 - https://github.com/MaximVozisov/Labs_PSTU/blob/main/N1/N1.cpp<br>
 2 - https://github.com/MaximVozisov/Labs_PSTU/blob/main/N2/N2.cpp<br>
-[id]: http://example.com/ "Необязательная подсказка"
+[пример][id]: http://example.com/ "Необязательная подсказка"
