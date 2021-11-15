@@ -8,6 +8,8 @@ int main()
     cin >> x;
     switch (x)
     {
+    case 0:
+        cout << 0;
     case 1:
         cout << 1;
     case 2:
