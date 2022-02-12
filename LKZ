@@ -1,0 +1,59 @@
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+
+using namespace std;
+
+//Найти элемент в массиве равный z, удалить, вставить на место p.
+
+int main()
+{
+	setlocale(0, "");
+	srand(time(0));
+	int n, i;
+	cout << "Введи количество элементов в массиве: ";
+	cin >> n;
+	int* a = new int[n];
+	for (i = 0; i < n; i++)
+	{
+		a[i] = rand() % 100;
+	}
+	for (i = 0; i < n; i++)
+	{
+		cout << a[i] << " ";
+	}
+	cout << endl << "Элемент равный чему нужно найти: ";
+	int z, y, k;
+	cin >> z;
+	i = 0;
+	bool f = false;
+	while ((i < n) && (!f))
+	{
+		if (a[i] == z)
+		{
+			y = a[i];
+			k = i;
+			f = true;
+		}
+		i += 1;
+	}
+	for (i = k; i < n-1; i++);
+	{
+		a[i] = a[i + 1];
+	}
+	n -= 1;
+	for (i = 0; i < n; i++)
+	{
+		cout << a[i] << " ";
+	}
+	cout << endl << "Индекс элемента вместо которого нужно поставить: ";
+	int p;
+	cin >> p;
+	a[p] = y;
+	for (i = 0; i < n; i++)
+	{
+		cout << a[i] << " ";
+	}
+	delete [] a;
+	return 0;
+}
