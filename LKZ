@@ -2,33 +2,71 @@
 
 using namespace std;
 
-//Лабораторная работа N5
+//Лабораторная работа N4
 
 int main()
 {
-	setlocale(0, "");
-	srand(time(0));
-	int m, n;
-	cout << "Столбцов: ";
-	cin >> m;
-	cout << "Строк: ";
-	cin >> n;
-	int** a = new int *[n];
+    setlocale(0, "");
+    srand(time(0));
+    int n;
+    cout << "Введи размерность массива: ";
+    cin >> n;
+    int* a = new int[n];
+    for (int i = 0; i < n; i++)
+    {
+        a[i] = rand() % 100;
+        cout << a[i] << " ";
+    }
 
-	for (int i = 0; i < n; i++)
-	{
-		a[i] = new int[m];
-	}
-
-	for (int i = 0; i < n; i++) 
-	{
-		for (int j = 0; i < m; j++)
-		{
-			a[i][j] = rand() % 100;
-			cout << a[i][j] << " ";
-		}
-		cout << endl;
-	}
-	delete[] a;
-	return 0;
+    int max = a[0], k = 0, min = a[0], l = 0;
+    float sum = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (max < a[i])
+        {
+            max = a[i];
+            k = i;
+        }
+        if (min > a[i])
+        {
+            min = a[i];
+            l = i;
+        }
+        sum += a[i];
+    }
+    int p = a[k];
+    a[k] = a[l];
+    a[l] = p;
+    k = 0;
+    l = 0;
+    float srzn = sum / n;
+    float proz = srzn * 0.1;
+    l = srzn + proz;
+    cout << endl << l;
+    for (int i = 0; i < n; i++)
+    {
+        if (l < a[i])
+        {
+            a[i] = -1;
+            k++;
+        }
+    }
+    int j = 0;
+    int* b = new int[n-k];
+    for (int i = 0; i < n; i++)
+    {
+        if (a[i] != -1)
+        {
+            b[j] = a[i];
+            j++;
+        }
+    }
+    cout << endl;
+    for (int i = 0; i < n-k; i++)
+    {
+        cout << b[i] << " ";
+    }
+    delete[] a;
+    delete[] b;
+    return 0;
 }
