@@ -1,72 +1,51 @@
 #include <iostream>
-
+#include <string>
 using namespace std;
 
-//Лабораторная работа N4
+struct film
+{
+	int id{};
+	string fname;
+	string fr;
+	int year{};
+};
+
+void writefilm(film e, int i)
+{
+	e.id = i + 1;
+	cout << "Введи название фильма: ";
+	cin >> e.fname;
+	cout << "Режиссер фильма: ";
+	cin >> e.fr;
+	cout << "Год издания: ";
+	cin >> e.year;
+}
+
+void tablefilm(film e)
+{
+	cout << endl << e.id << " | " << e.fname << " | " << e.fr << " | " << e.year << endl;
+}
 
 int main()
 {
-    setlocale(0, "");
-    srand(time(0));
-    int n;
-    cout << "Введи размерность массива: ";
-    cin >> n;
-    int* a = new int[n];
-    for (int i = 0; i < n; i++)
-    {
-        a[i] = rand() % 100;
-        cout << a[i] << " ";
-    }
-
-    int max = a[0], k = 0, min = a[0], l = 0;
-    float sum = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (max < a[i])
-        {
-            max = a[i];
-            k = i;
-        }
-        if (min > a[i])
-        {
-            min = a[i];
-            l = i;
-        }
-        sum += a[i];
-    }
-    int p = a[k];
-    a[k] = a[l];
-    a[l] = p;
-    k = 0;
-    l = 0;
-    float srzn = sum / n;
-    float proz = srzn * 0.1;
-    l = srzn + proz;
-    cout << endl << l;
-    for (int i = 0; i < n; i++)
-    {
-        if (l < a[i])
-        {
-            a[i] = -1;
-            k++;
-        }
-    }
-    int j = 0;
-    int* b = new int[n-k];
-    for (int i = 0; i < n; i++)
-    {
-        if (a[i] != -1)
-        {
-            b[j] = a[i];
-            j++;
-        }
-    }
-    cout << endl;
-    for (int i = 0; i < n-k; i++)
-    {
-        cout << b[i] << " ";
-    }
-    delete[] a;
-    delete[] b;
-    return 0;
+	setlocale(0, "");
+	system("chcp 1251");
+	system("cls");
+	cout << "Введи количестов любимых фильмов: ";
+	int n;
+	cin >> n;
+	film* e = new film [n];
+	int i = 0;
+	for (; i < n; i++)
+	{
+		writefilm(e[i], i);
+	}
+	cout << "id | " << "Название фильма | " << "Сежиссёр фильма | " << "Год издания";
+	i = 0;
+	for (; i < n; i++)
+	{
+		tablefilm(e[i]);
+	}
+	delete[] e;
+	return 0;
 }
