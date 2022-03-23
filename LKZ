@@ -1,51 +1,65 @@
 #include <iostream>
 #include <string>
+#include <ctime>
 using namespace std;
 
-struct film
+int getShift(const string& substring, char symbol)
 {
-	int id{};
-	string fname;
-	string fr;
-	int year{};
-};
-
-void writefilm(film e, int i)
-{
-	e.id = i + 1;
-	cout << "Введи название фильма: ";
-	cin >> e.fname;
-	cout << "Режиссер фильма: ";
-	cin >> e.fr;
-	cout << "Год издания: ";
-	cin >> e.year;
+	if (substring[substring.size() - 1] == symbol)
+		return substring.size();
+	int counter = 1;
+	for (int i = substring.size() - 2; i >= 0; i--)
+	{
+		if (substring[i] == symbol)
+			return counter;
+		counter++;
+	}
+	return substring.length();
 }
 
-void tablefilm(film e)
+int search(const string& substring, const string& source)
 {
-	cout << endl << e.id << " | " << e.fname << " | " << e.fr << " | " << e.year << endl;
+	int headn = source.size();
+	int n = substring.length();
+	bool f;
+	for (int i = 0; i < headn;)
+	{
+		f = false;
+		for (int j = n - 1; (j >= 0) && (!f); j--)
+		{
+			if (substring[j] != source[i + j])
+			{				
+				i += getShift(substring, source[i + j]);
+				f = true;
+			}
+		}
+		if (!f)
+			return i;
+	}
+	return -1;
 }
 
 int main()
 {
 	setlocale(0, "");
+	string source, substring;
 	system("chcp 1251");
 	system("cls");
-	cout << "Введи количестов любимых фильмов: ";
-	int n;
-	cin >> n;
-	film* e = new film [n];
-	int i = 0;
-	for (; i < n; i++)
+	srand(time(NULL));
+	int headn = 15;
+	for (int i = 0; i < headn; i++)
 	{
-		writefilm(e[i], i);
+		char s = rand() % 25 + 97;
+		source += s;
 	}
-	cout << "id | " << "Название фильма | " << "Сежиссёр фильма | " << "Год издания";
-	i = 0;
-	for (; i < n; i++)
-	{
-		tablefilm(e[i]);
-	}
-	delete[] e;
+	cout << source << endl;;
+	cout << "Введи искомую подстроку: ";
+	getline(cin, substring);
+	int n = substring.size();
+	int j = search(substring, source);
+	cout << j << endl;
+	for (int i = 1; i <= n; i++)
+		source[j] = source[j + n];
+	cout << source;
 	return 0;
 }
