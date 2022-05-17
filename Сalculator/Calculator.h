@@ -644,46 +644,54 @@ private: System::Void button2_Enter(System::Object^ sender, System::EventArgs^ e
 	int n1 = Int32::Parse(textBox1->Text);
 	int n5 = Int32::Parse(textBox5->Text);
 	int n4 = Int32::Parse(textBox4->Text);
+	if ((n1 == 0) || (n4 == 0))
+		return;
 	char znak = comboBox1->Text[0];
 	int nok = NOK(n1, n4);
-	if (textBox3->Text != "")
+
+	//Перевод в неправильную дробь
+	if ((textBox3->Text != "") || (textBox3->Text != "0"))
 	{
 		n3 = Int32::Parse(textBox3->Text);
 		n2 = n2 + n1 * n3;
+		if (l2)
+			n2 = -n2;
 	}
-	if (textBox6->Text != "")
+	if ((textBox6->Text != "") || (textBox3->Text != "0"))
 	{
 		n6 = Int32::Parse(textBox6->Text);
 		n5 = n5 + n4 * n6;
+		if (l3)
+			n5 = -n5;
 	}
-	int chis1 = n2 * (nok / n1);
-	int chis2 = n5 * (nok / n4);
-	int chis = chis1 + chis2;
+	int chis1 = (n2 * (nok / n1));
+	int chis2 = (n5 * (nok / n4));
+	int chisPlus = chis1 + chis2;
 	switch (znak)
 	{
 	case '+':
-		if (chis < nok)
+		if (chisPlus < nok)
 		{
-			textBox8->Text = System::Convert::ToString(chis);
+			textBox8->Text = System::Convert::ToString(chisPlus);
 			textBox7->Text = System::Convert::ToString(nok);
 		}
-		if (chis > nok)
+		if (chisPlus > nok)
 		{
-			textBox9->Text = System::Convert::ToString(chis / nok);
-			textBox8->Text = System::Convert::ToString(chis - nok * (chis / nok));
+			textBox9->Text = System::Convert::ToString(chisPlus / nok);
+			textBox8->Text = System::Convert::ToString(chisPlus - nok * (chisPlus / nok));
 			textBox7->Text = System::Convert::ToString(nok);
 		}
-		if ((chis = nok) && (textBox3->Text != "") && (textBox6->Text != ""))
+		if ((chisPlus = nok) && (textBox3->Text != "") && (textBox6->Text != ""))
 			textBox9->Text = System::Convert::ToString(n3 + n6 + 1);
-		if ((chis = nok) && (textBox3->Text == "") && (textBox6->Text == ""))
+		if ((chisPlus = nok) && (textBox3->Text == "") && (textBox6->Text == ""))
 			textBox9->Text = System::Convert::ToString(1);
-		if ((chis = nok) && (textBox3->Text == "") && (textBox6->Text != ""))
+		if ((chisPlus = nok) && (textBox3->Text == "") && (textBox6->Text != ""))
 			textBox9->Text = System::Convert::ToString(1 + n6);
-		if ((chis = nok) && (textBox3->Text != "") && (textBox6->Text == ""))
+		if ((chisPlus = nok) && (textBox3->Text != "") && (textBox6->Text == ""))
 			textBox9->Text = System::Convert::ToString(1 + n3);
 		break;
 	case '-':
-		textBox8->Text = System::Convert::ToString(chis1 - chis2);
+		textBox8->Text = System::Convert::ToString(nok);
 		textBox7->Text = System::Convert::ToString(nok);
 		break;
 	case '*':
