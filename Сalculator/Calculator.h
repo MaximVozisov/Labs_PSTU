@@ -82,6 +82,7 @@ namespace Ñalculator {
 	private: System::Windows::Forms::Button^ button6;
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Label^ label3;
+	private: System::Windows::Forms::Label^ label4;
 	private:
 		System::ComponentModel::Container ^components;
 
@@ -121,6 +122,7 @@ namespace Ñalculator {
 			this->button6 = (gcnew System::Windows::Forms::Button());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// textBox1
@@ -296,21 +298,21 @@ namespace Ñalculator {
 			// 
 			// textBox7
 			// 
-			this->textBox7->Location = System::Drawing::Point(342, 38);
+			this->textBox7->Location = System::Drawing::Point(354, 38);
 			this->textBox7->Name = L"textBox7";
 			this->textBox7->Size = System::Drawing::Size(36, 20);
 			this->textBox7->TabIndex = 24;
 			// 
 			// textBox8
 			// 
-			this->textBox8->Location = System::Drawing::Point(342, 13);
+			this->textBox8->Location = System::Drawing::Point(354, 13);
 			this->textBox8->Name = L"textBox8";
 			this->textBox8->Size = System::Drawing::Size(36, 20);
 			this->textBox8->TabIndex = 23;
 			// 
 			// textBox9
 			// 
-			this->textBox9->Location = System::Drawing::Point(303, 25);
+			this->textBox9->Location = System::Drawing::Point(315, 25);
 			this->textBox9->Name = L"textBox9";
 			this->textBox9->Size = System::Drawing::Size(24, 20);
 			this->textBox9->TabIndex = 22;
@@ -358,7 +360,7 @@ namespace Ñalculator {
 			// panel3
 			// 
 			this->panel3->BackColor = System::Drawing::SystemColors::ActiveCaptionText;
-			this->panel3->Location = System::Drawing::Point(333, 35);
+			this->panel3->Location = System::Drawing::Point(345, 35);
 			this->panel3->Name = L"panel3";
 			this->panel3->Size = System::Drawing::Size(54, 1);
 			this->panel3->TabIndex = 32;
@@ -455,6 +457,16 @@ namespace Ñalculator {
 			this->label3->TabIndex = 40;
 			this->label3->Text = L"-";
 			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->BackColor = System::Drawing::Color::Transparent;
+			this->label4->Location = System::Drawing::Point(300, 28);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(10, 13);
+			this->label4->TabIndex = 41;
+			this->label4->Text = L"-";
+			// 
 			// Calculator
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -462,6 +474,7 @@ namespace Ñalculator {
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(416, 189);
+			this->Controls->Add(this->label4);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->button6);
@@ -515,6 +528,7 @@ private: System::Void Calculator_Load(System::Object^ sender, System::EventArgs^
 	Size = System::Drawing::Size(432, 180);
 	label2->Visible = false;
 	label3->Visible = false;
+	label4->Visible = false;
 	n0->Visible = false;
 	n1->Visible = false;
 	n2->Visible = false;
@@ -638,6 +652,80 @@ private: System::Void n9_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 }
 private: System::Void button2_Enter(System::Object^ sender, System::EventArgs^ e) {
+	label4->Visible = false;
+	textBox9->Text = "";
+	textBox8->Text = "";
+	textBox7->Text = "";
+	if ((textBox1->Text == "") && (textBox4->Text == "") && (textBox2->Text == "") && (textBox5->Text == "") && (textBox3->Text != "") && (textBox6->Text != ""))
+	{
+		int n3 = Int32::Parse(textBox3->Text);
+		int n6 = Int32::Parse(textBox6->Text);
+		if (l2)
+			n3 = -n3;
+		if (l3)
+			n6 = -n6;
+		char znak = comboBox1->Text[0];
+		switch (znak)
+		{
+		case '+':
+			if (n6 + n3 < 0)
+			{
+				textBox9->Text = System::Convert::ToString(-(n6 + n3));
+				label4->Visible = true;
+			}
+			else textBox9->Text = System::Convert::ToString(n6 + n3);
+			break;
+		case '-':
+			if (n6 - n3 < 0)
+			{
+				textBox9->Text = System::Convert::ToString(-(n6 - n3));
+				label4->Visible = true;
+			}
+			else textBox9->Text = System::Convert::ToString(n6 + n3);
+			break;
+		case '*':
+			if (n6 * n3 < 0)
+			{
+				textBox9->Text = System::Convert::ToString(-(n6 * n3));
+				label4->Visible = true;
+			}
+			else textBox9->Text = System::Convert::ToString(n6 * n3);
+			break;
+		case '/':
+			int chis = n3;
+			int znam = n6;
+			if (chis % znam == 0)
+				textBox9->Text = System::Convert::ToString(chis / znam);
+			else
+			{
+				int cel = chis / znam;
+				if (!cel)
+				{
+					textBox8->Text = System::Convert::ToString(chis);
+					textBox7->Text = System::Convert::ToString(znam);
+				}
+				else
+				{
+					textBox9->Text = System::Convert::ToString(chis / znam);
+					if (znam % (chis - cel * znam) == 0)
+					{
+						textBox8->Text = System::Convert::ToString(1);
+						textBox7->Text = System::Convert::ToString(znam/(chis - cel * znam));
+					}
+					else
+					{
+						textBox8->Text = System::Convert::ToString(chis - cel*znam);
+						textBox7->Text = System::Convert::ToString(znam);
+					}
+					
+				}
+			}
+			break;
+		}
+		return;
+	}
+	if ((textBox1->Text == "") || (textBox4->Text == "") || (textBox2->Text == "") || (textBox5->Text == ""))
+		return;
 	int n3 = 0;
 	int n6 = 0;
 	int n2 = Int32::Parse(textBox2->Text);
@@ -650,14 +738,14 @@ private: System::Void button2_Enter(System::Object^ sender, System::EventArgs^ e
 	int nok = NOK(n1, n4);
 
 	//Ïåðåâîä â íåïðàâèëüíóþ äðîáü
-	if ((textBox3->Text != "") || (textBox3->Text != "0"))
+	if ((textBox3->Text != "") && (textBox3->Text != "0"))
 	{
 		n3 = Int32::Parse(textBox3->Text);
 		n2 = n2 + n1 * n3;
 		if (l2)
 			n2 = -n2;
 	}
-	if ((textBox6->Text != "") || (textBox3->Text != "0"))
+	if ((textBox6->Text != "") && (textBox3->Text != "0"))
 	{
 		n6 = Int32::Parse(textBox6->Text);
 		n5 = n5 + n4 * n6;
@@ -683,12 +771,6 @@ private: System::Void button2_Enter(System::Object^ sender, System::EventArgs^ e
 		}
 		if ((chisPlus = nok) && (textBox3->Text != "") && (textBox6->Text != ""))
 			textBox9->Text = System::Convert::ToString(n3 + n6 + 1);
-		if ((chisPlus = nok) && (textBox3->Text == "") && (textBox6->Text == ""))
-			textBox9->Text = System::Convert::ToString(1);
-		if ((chisPlus = nok) && (textBox3->Text == "") && (textBox6->Text != ""))
-			textBox9->Text = System::Convert::ToString(1 + n6);
-		if ((chisPlus = nok) && (textBox3->Text != "") && (textBox6->Text == ""))
-			textBox9->Text = System::Convert::ToString(1 + n3);
 		break;
 	case '-':
 		textBox8->Text = System::Convert::ToString(nok);
@@ -722,6 +804,7 @@ private: System::Void clear_Click(System::Object^ sender, System::EventArgs^ e) 
 	l2 = false;
 	label3->Visible = false;
 	l3 = false;
+	label4->Visible = false;
 }
 private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) {
 	Size = System::Drawing::Size(432, 228);
