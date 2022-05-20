@@ -29,6 +29,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TravelingSalesman", "Travel
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Сalculator", "Сalculator\Сalculator.vcxproj", "{FB4FD8C1-AB10-4687-9F74-2E76EACA7B73}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TravelSalesman", "TravelSalesman\TravelSalesman.vcxproj", "{C15ECE05-DC55-4548-AF22-4EDB4B1D4D36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -141,6 +143,14 @@ Global
 		{FB4FD8C1-AB10-4687-9F74-2E76EACA7B73}.Release|x64.Build.0 = Release|x64
 		{FB4FD8C1-AB10-4687-9F74-2E76EACA7B73}.Release|x86.ActiveCfg = Release|Win32
 		{FB4FD8C1-AB10-4687-9F74-2E76EACA7B73}.Release|x86.Build.0 = Release|Win32
+		{C15ECE05-DC55-4548-AF22-4EDB4B1D4D36}.Debug|x64.ActiveCfg = Debug|x64
+		{C15ECE05-DC55-4548-AF22-4EDB4B1D4D36}.Debug|x64.Build.0 = Debug|x64
+		{C15ECE05-DC55-4548-AF22-4EDB4B1D4D36}.Debug|x86.ActiveCfg = Debug|Win32
+		{C15ECE05-DC55-4548-AF22-4EDB4B1D4D36}.Debug|x86.Build.0 = Debug|Win32
+		{C15ECE05-DC55-4548-AF22-4EDB4B1D4D36}.Release|x64.ActiveCfg = Release|x64
+		{C15ECE05-DC55-4548-AF22-4EDB4B1D4D36}.Release|x64.Build.0 = Release|x64
+		{C15ECE05-DC55-4548-AF22-4EDB4B1D4D36}.Release|x86.ActiveCfg = Release|Win32
+		{C15ECE05-DC55-4548-AF22-4EDB4B1D4D36}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
