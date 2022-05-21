@@ -2,7 +2,8 @@
 ***
 <h1>Творческие задания (Вариант 5)</h1>
 Калькулятор - https://github.com/MaximVozisov/Labs_PSTU/tree/main/Сalculator<br>
-Задача коммивояжёра - https://github.com/MaximVozisov/Labs_PSTU/blob/main/TravelSalesman<br>
+Задача коммивояжёра - https://github.com/MaximVozisov/Labs_PSTU/blob/main/TravelSalesman<br>**
+***
 <h2>Олимпиандные задачи на 30.10.2021</h2>
 1 - https://github.com/MaximVozisov/Labs_PSTU/blob/main/N1/N1.cpp<br>
 2 - https://github.com/MaximVozisov/Labs_PSTU/blob/main/N2/N2.cpp<br>
