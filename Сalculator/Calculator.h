@@ -83,6 +83,7 @@ namespace Ñalculator {
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::Label^ label4;
+	private: System::Windows::Forms::Label^ labelError;
 	private:
 		System::ComponentModel::Container ^components;
 
@@ -123,11 +124,12 @@ namespace Ñalculator {
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->labelError = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// textBox1
 			// 
-			this->textBox1->Location = System::Drawing::Point(78, 38);
+			this->textBox1->Location = System::Drawing::Point(77, 53);
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(36, 20);
 			this->textBox1->TabIndex = 3;
@@ -136,7 +138,7 @@ namespace Ñalculator {
 			// 
 			// textBox4
 			// 
-			this->textBox4->Location = System::Drawing::Point(233, 38);
+			this->textBox4->Location = System::Drawing::Point(232, 53);
 			this->textBox4->Name = L"textBox4";
 			this->textBox4->Size = System::Drawing::Size(36, 20);
 			this->textBox4->TabIndex = 7;
@@ -145,7 +147,7 @@ namespace Ñalculator {
 			// 
 			// textBox5
 			// 
-			this->textBox5->Location = System::Drawing::Point(233, 13);
+			this->textBox5->Location = System::Drawing::Point(232, 28);
 			this->textBox5->Name = L"textBox5";
 			this->textBox5->Size = System::Drawing::Size(36, 20);
 			this->textBox5->TabIndex = 6;
@@ -154,7 +156,7 @@ namespace Ñalculator {
 			// 
 			// textBox6
 			// 
-			this->textBox6->Location = System::Drawing::Point(194, 25);
+			this->textBox6->Location = System::Drawing::Point(193, 40);
 			this->textBox6->Name = L"textBox6";
 			this->textBox6->Size = System::Drawing::Size(24, 20);
 			this->textBox6->TabIndex = 5;
@@ -165,7 +167,7 @@ namespace Ñalculator {
 			// 
 			this->n7->BackColor = System::Drawing::Color::SeaShell;
 			this->n7->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->n7->Location = System::Drawing::Point(129, 64);
+			this->n7->Location = System::Drawing::Point(128, 79);
 			this->n7->Name = L"n7";
 			this->n7->Size = System::Drawing::Size(30, 30);
 			this->n7->TabIndex = 10;
@@ -177,7 +179,7 @@ namespace Ñalculator {
 			// 
 			this->n8->BackColor = System::Drawing::Color::SeaShell;
 			this->n8->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->n8->Location = System::Drawing::Point(158, 64);
+			this->n8->Location = System::Drawing::Point(157, 79);
 			this->n8->Name = L"n8";
 			this->n8->Size = System::Drawing::Size(30, 30);
 			this->n8->TabIndex = 9;
@@ -189,7 +191,7 @@ namespace Ñalculator {
 			// 
 			this->n9->BackColor = System::Drawing::Color::SeaShell;
 			this->n9->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->n9->Location = System::Drawing::Point(187, 64);
+			this->n9->Location = System::Drawing::Point(186, 79);
 			this->n9->Name = L"n9";
 			this->n9->Size = System::Drawing::Size(30, 30);
 			this->n9->TabIndex = 8;
@@ -201,7 +203,7 @@ namespace Ñalculator {
 			// 
 			this->n6->BackColor = System::Drawing::Color::SeaShell;
 			this->n6->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->n6->Location = System::Drawing::Point(187, 93);
+			this->n6->Location = System::Drawing::Point(186, 108);
 			this->n6->Name = L"n6";
 			this->n6->Size = System::Drawing::Size(30, 30);
 			this->n6->TabIndex = 11;
@@ -213,7 +215,7 @@ namespace Ñalculator {
 			// 
 			this->n5->BackColor = System::Drawing::Color::SeaShell;
 			this->n5->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->n5->Location = System::Drawing::Point(158, 93);
+			this->n5->Location = System::Drawing::Point(157, 108);
 			this->n5->Name = L"n5";
 			this->n5->Size = System::Drawing::Size(30, 30);
 			this->n5->TabIndex = 12;
@@ -225,7 +227,7 @@ namespace Ñalculator {
 			// 
 			this->n4->BackColor = System::Drawing::Color::SeaShell;
 			this->n4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->n4->Location = System::Drawing::Point(129, 93);
+			this->n4->Location = System::Drawing::Point(128, 108);
 			this->n4->Name = L"n4";
 			this->n4->Size = System::Drawing::Size(30, 30);
 			this->n4->TabIndex = 13;
@@ -237,7 +239,7 @@ namespace Ñalculator {
 			// 
 			this->n3->BackColor = System::Drawing::Color::SeaShell;
 			this->n3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->n3->Location = System::Drawing::Point(187, 122);
+			this->n3->Location = System::Drawing::Point(186, 137);
 			this->n3->Name = L"n3";
 			this->n3->Size = System::Drawing::Size(30, 30);
 			this->n3->TabIndex = 14;
@@ -249,7 +251,7 @@ namespace Ñalculator {
 			// 
 			this->n2->BackColor = System::Drawing::Color::SeaShell;
 			this->n2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->n2->Location = System::Drawing::Point(158, 122);
+			this->n2->Location = System::Drawing::Point(157, 137);
 			this->n2->Name = L"n2";
 			this->n2->Size = System::Drawing::Size(30, 30);
 			this->n2->TabIndex = 15;
@@ -261,7 +263,7 @@ namespace Ñalculator {
 			// 
 			this->n1->BackColor = System::Drawing::Color::SeaShell;
 			this->n1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->n1->Location = System::Drawing::Point(129, 122);
+			this->n1->Location = System::Drawing::Point(128, 137);
 			this->n1->Name = L"n1";
 			this->n1->Size = System::Drawing::Size(30, 30);
 			this->n1->TabIndex = 16;
@@ -273,14 +275,14 @@ namespace Ñalculator {
 			// 
 			this->comboBox1->FormattingEnabled = true;
 			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"+", L"-", L"*", L"/" });
-			this->comboBox1->Location = System::Drawing::Point(136, 25);
+			this->comboBox1->Location = System::Drawing::Point(135, 40);
 			this->comboBox1->Name = L"comboBox1";
 			this->comboBox1->Size = System::Drawing::Size(33, 21);
 			this->comboBox1->TabIndex = 4;
 			// 
 			// textBox2
 			// 
-			this->textBox2->Location = System::Drawing::Point(78, 13);
+			this->textBox2->Location = System::Drawing::Point(77, 28);
 			this->textBox2->Name = L"textBox2";
 			this->textBox2->Size = System::Drawing::Size(36, 20);
 			this->textBox2->TabIndex = 2;
@@ -289,7 +291,7 @@ namespace Ñalculator {
 			// 
 			// textBox3
 			// 
-			this->textBox3->Location = System::Drawing::Point(39, 25);
+			this->textBox3->Location = System::Drawing::Point(38, 40);
 			this->textBox3->Name = L"textBox3";
 			this->textBox3->Size = System::Drawing::Size(24, 20);
 			this->textBox3->TabIndex = 1;
@@ -298,21 +300,21 @@ namespace Ñalculator {
 			// 
 			// textBox7
 			// 
-			this->textBox7->Location = System::Drawing::Point(354, 38);
+			this->textBox7->Location = System::Drawing::Point(353, 53);
 			this->textBox7->Name = L"textBox7";
 			this->textBox7->Size = System::Drawing::Size(36, 20);
 			this->textBox7->TabIndex = 24;
 			// 
 			// textBox8
 			// 
-			this->textBox8->Location = System::Drawing::Point(354, 13);
+			this->textBox8->Location = System::Drawing::Point(353, 28);
 			this->textBox8->Name = L"textBox8";
 			this->textBox8->Size = System::Drawing::Size(36, 20);
 			this->textBox8->TabIndex = 23;
 			// 
 			// textBox9
 			// 
-			this->textBox9->Location = System::Drawing::Point(315, 25);
+			this->textBox9->Location = System::Drawing::Point(314, 40);
 			this->textBox9->Name = L"textBox9";
 			this->textBox9->Size = System::Drawing::Size(24, 20);
 			this->textBox9->TabIndex = 22;
@@ -321,7 +323,7 @@ namespace Ñalculator {
 			// 
 			this->clear->BackColor = System::Drawing::Color::SeaShell;
 			this->clear->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->clear->Location = System::Drawing::Point(303, 105);
+			this->clear->Location = System::Drawing::Point(302, 120);
 			this->clear->Name = L"clear";
 			this->clear->Size = System::Drawing::Size(102, 29);
 			this->clear->TabIndex = 21;
@@ -333,7 +335,7 @@ namespace Ñalculator {
 			// 
 			this->n0->BackColor = System::Drawing::Color::SeaShell;
 			this->n0->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->n0->Location = System::Drawing::Point(129, 150);
+			this->n0->Location = System::Drawing::Point(128, 165);
 			this->n0->Name = L"n0";
 			this->n0->Size = System::Drawing::Size(30, 30);
 			this->n0->TabIndex = 17;
@@ -344,7 +346,7 @@ namespace Ñalculator {
 			// panel1
 			// 
 			this->panel1->BackColor = System::Drawing::SystemColors::ActiveCaptionText;
-			this->panel1->Location = System::Drawing::Point(224, 35);
+			this->panel1->Location = System::Drawing::Point(223, 50);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(54, 1);
 			this->panel1->TabIndex = 30;
@@ -352,7 +354,7 @@ namespace Ñalculator {
 			// panel2
 			// 
 			this->panel2->BackColor = System::Drawing::SystemColors::ActiveCaptionText;
-			this->panel2->Location = System::Drawing::Point(69, 35);
+			this->panel2->Location = System::Drawing::Point(68, 50);
 			this->panel2->Name = L"panel2";
 			this->panel2->Size = System::Drawing::Size(54, 1);
 			this->panel2->TabIndex = 31;
@@ -360,7 +362,7 @@ namespace Ñalculator {
 			// panel3
 			// 
 			this->panel3->BackColor = System::Drawing::SystemColors::ActiveCaptionText;
-			this->panel3->Location = System::Drawing::Point(345, 35);
+			this->panel3->Location = System::Drawing::Point(344, 50);
 			this->panel3->Name = L"panel3";
 			this->panel3->Size = System::Drawing::Size(54, 1);
 			this->panel3->TabIndex = 32;
@@ -369,7 +371,7 @@ namespace Ñalculator {
 			// 
 			this->button2->BackColor = System::Drawing::Color::SeaShell;
 			this->button2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button2->Location = System::Drawing::Point(303, 71);
+			this->button2->Location = System::Drawing::Point(302, 86);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(102, 29);
 			this->button2->TabIndex = 20;
@@ -381,7 +383,7 @@ namespace Ñalculator {
 			// 
 			this->label1->AutoSize = true;
 			this->label1->BackColor = System::Drawing::Color::Transparent;
-			this->label1->Location = System::Drawing::Point(284, 28);
+			this->label1->Location = System::Drawing::Point(283, 43);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(13, 13);
 			this->label1->TabIndex = 34;
@@ -391,7 +393,7 @@ namespace Ñalculator {
 			// 
 			this->button3->BackColor = System::Drawing::Color::SeaShell;
 			this->button3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button3->Location = System::Drawing::Point(233, 64);
+			this->button3->Location = System::Drawing::Point(232, 79);
 			this->button3->Name = L"button3";
 			this->button3->RightToLeft = System::Windows::Forms::RightToLeft::No;
 			this->button3->Size = System::Drawing::Size(36, 23);
@@ -404,7 +406,7 @@ namespace Ñalculator {
 			// 
 			this->button4->BackColor = System::Drawing::Color::SeaShell;
 			this->button4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button4->Location = System::Drawing::Point(78, 64);
+			this->button4->Location = System::Drawing::Point(77, 79);
 			this->button4->Name = L"button4";
 			this->button4->RightToLeft = System::Windows::Forms::RightToLeft::No;
 			this->button4->Size = System::Drawing::Size(36, 23);
@@ -417,7 +419,7 @@ namespace Ñalculator {
 			// 
 			this->button5->BackColor = System::Drawing::Color::SeaShell;
 			this->button5->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button5->Location = System::Drawing::Point(12, 105);
+			this->button5->Location = System::Drawing::Point(11, 120);
 			this->button5->Name = L"button5";
 			this->button5->Size = System::Drawing::Size(102, 30);
 			this->button5->TabIndex = 37;
@@ -429,7 +431,7 @@ namespace Ñalculator {
 			// 
 			this->button6->BackColor = System::Drawing::Color::SeaShell;
 			this->button6->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button6->Location = System::Drawing::Point(158, 150);
+			this->button6->Location = System::Drawing::Point(157, 165);
 			this->button6->Name = L"button6";
 			this->button6->Size = System::Drawing::Size(59, 30);
 			this->button6->TabIndex = 38;
@@ -441,7 +443,7 @@ namespace Ñalculator {
 			// 
 			this->label2->AutoSize = true;
 			this->label2->BackColor = System::Drawing::Color::Transparent;
-			this->label2->Location = System::Drawing::Point(23, 28);
+			this->label2->Location = System::Drawing::Point(22, 43);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(10, 13);
 			this->label2->TabIndex = 39;
@@ -451,7 +453,7 @@ namespace Ñalculator {
 			// 
 			this->label3->AutoSize = true;
 			this->label3->BackColor = System::Drawing::Color::Transparent;
-			this->label3->Location = System::Drawing::Point(178, 28);
+			this->label3->Location = System::Drawing::Point(177, 43);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(10, 13);
 			this->label3->TabIndex = 40;
@@ -461,11 +463,21 @@ namespace Ñalculator {
 			// 
 			this->label4->AutoSize = true;
 			this->label4->BackColor = System::Drawing::Color::Transparent;
-			this->label4->Location = System::Drawing::Point(300, 28);
+			this->label4->Location = System::Drawing::Point(299, 43);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(10, 13);
 			this->label4->TabIndex = 41;
 			this->label4->Text = L"-";
+			// 
+			// labelError
+			// 
+			this->labelError->AutoSize = true;
+			this->labelError->BackColor = System::Drawing::Color::Transparent;
+			this->labelError->Location = System::Drawing::Point(115, 9);
+			this->labelError->Name = L"labelError";
+			this->labelError->Size = System::Drawing::Size(181, 13);
+			this->labelError->TabIndex = 42;
+			this->labelError->Text = L"Îøèáêà: ïîëÿ çàïîëíåíû íåâåðíî";
 			// 
 			// Calculator
 			// 
@@ -473,7 +485,8 @@ namespace Ñalculator {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->ClientSize = System::Drawing::Size(416, 189);
+			this->ClientSize = System::Drawing::Size(416, 203);
+			this->Controls->Add(this->labelError);
 			this->Controls->Add(this->label4);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->label2);
@@ -510,9 +523,9 @@ namespace Ñalculator {
 			this->DoubleBuffered = true;
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MaximizeBox = false;
-			this->MaximumSize = System::Drawing::Size(432, 228);
+			this->MaximumSize = System::Drawing::Size(432, 242);
 			this->MinimizeBox = false;
-			this->MinimumSize = System::Drawing::Size(432, 180);
+			this->MinimumSize = System::Drawing::Size(432, 196);
 			this->Name = L"Calculator";
 			this->Text = L"Fraction calculator";
 			this->Load += gcnew System::EventHandler(this, &Calculator::Calculator_Load);
@@ -525,7 +538,8 @@ int enter = 0;
 bool l2 = false;
 bool l3 = false;
 private: System::Void Calculator_Load(System::Object^ sender, System::EventArgs^ e) {
-	Size = System::Drawing::Size(432, 180);
+	Size = System::Drawing::Size(432, 196);
+	labelError->Visible = false;
 	label2->Visible = false;
 	label3->Visible = false;
 	label4->Visible = false;
@@ -652,6 +666,7 @@ private: System::Void n9_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 }
 private: System::Void button2_Enter(System::Object^ sender, System::EventArgs^ e) {
+	labelError->Visible = false;
 	label4->Visible = false;
 	textBox9->Text = "";
 	textBox8->Text = "";
@@ -725,7 +740,10 @@ private: System::Void button2_Enter(System::Object^ sender, System::EventArgs^ e
 		return;
 	}
 	if ((textBox1->Text == "") || (textBox4->Text == "") || (textBox2->Text == "") || (textBox5->Text == ""))
+	{
+		labelError->Visible = true;
 		return;
+	}
 	int n3 = 0;
 	int n6 = 0;
 	int n2 = Int32::Parse(textBox2->Text);
@@ -733,7 +751,10 @@ private: System::Void button2_Enter(System::Object^ sender, System::EventArgs^ e
 	int n5 = Int32::Parse(textBox5->Text);
 	int n4 = Int32::Parse(textBox4->Text);
 	if ((n1 == 0) || (n4 == 0))
+	{
+		labelError->Visible = true;
 		return;
+	}
 	char znak = comboBox1->Text[0];
 	int nok = NOK(n1, n4);
 
@@ -789,6 +810,7 @@ private: System::Void button2_Enter(System::Object^ sender, System::EventArgs^ e
 	}
 }
 private: System::Void clear_Click(System::Object^ sender, System::EventArgs^ e) {
+	labelError->Visible = false;
 	textBox1->Text = "";
 	textBox2->Text = "";
 	textBox3->Text = "";
@@ -807,7 +829,7 @@ private: System::Void clear_Click(System::Object^ sender, System::EventArgs^ e) 
 	label4->Visible = false;
 }
 private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) {
-	Size = System::Drawing::Size(432, 228);
+	Size = System::Drawing::Size(432, 242);
 	button5->Visible = false;
 	n0->Visible = true;
 	n1->Visible = true;
