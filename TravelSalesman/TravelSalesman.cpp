@@ -1,19 +1,15 @@
 ﻿#pragma once
-#include <glut.h>
+#include <GL/glut.h>
 #include <stdio.h>
 #include <iostream>
 #include <vector>
 #include <sstream>
 using namespace std;
 
-int n;
-int** help;
+int** temper;
 int* result;
 int*** matrix;
-int win_width;
-int win_height;
-const int maxSize = 20;
-int amountVerts;
+const int mSize = 20;
 
 template<class T>
 class Graph
@@ -21,8 +17,9 @@ class Graph
 	vector<T> vertList;
 	vector<T> labelList;
 	bool* visitedVerts = new bool[vertList.size()];
+
 public:
-	int Matrix_temp[maxSize][maxSize] = { 0 };
+	int Matrix_temp[mSize][mSize] = { 0 };
 	Graph();
 	~Graph();
 	void DrawGraph();
@@ -39,6 +36,10 @@ public:
 	void Print();
 };
 
+int amountVerts;
+int winW;
+int winH;
+int n;
 int R;
 struct VertCoord
 {
@@ -48,7 +49,32 @@ struct VertCoord
 VertCoord vertC[20];
 Graph <int> graph;
 
-void Answer(int*** matrix, int n, int** help, int* path)
+void Prep(int***& matrix, int& n, int**& temper, int*& result)
+{
+	n = amountVerts;
+	temper = new int* [n];
+	result = new int[n];
+	matrix = new int** [n];
+	for (int i = 0; i <= n; i++)
+	{
+		temper[i] = new int[n];
+	}
+	for (int i = 0; i < n; i++)
+	{
+		matrix[i] = new int* [n];
+		for (int j = 0; j < n; j++)
+		{
+			if (graph.Matrix_temp[i][j] == 0)
+			{
+				matrix[i][j] = nullptr;
+				continue;
+			}
+			matrix[i][j] = new int(graph.Matrix_temp[i][j]);
+		}
+	}
+}
+
+void Answer(int*** matrix, int n, int** temper, int* path)
 {
 	for (int l = 0; l < n; l++)
 	{
@@ -91,7 +117,7 @@ void Answer(int*** matrix, int n, int** help, int* path)
 		{
 			for (int j = 0; j < n; j++)
 			{
-				help[i][j] = 0;
+				temper[i][j] = 0;
 			}
 		}
 		for (int i = 0; i < n; i++)
@@ -112,7 +138,7 @@ void Answer(int*** matrix, int n, int** help, int* path)
 						if (l != j && matrix[i][l] && vmin > *matrix[i][l])
 							vmin = *matrix[i][l];
 					}
-					help[i][j] = hmin + vmin;
+					temper[i][j] = hmin + vmin;
 				}
 			}
 		}
@@ -121,9 +147,9 @@ void Answer(int*** matrix, int n, int** help, int* path)
 		{
 			for (int j = 0; j < n; j++)
 			{
-				if (matrix[i][j] && mc < help[i][j])
+				if (matrix[i][j] && mc < temper[i][j])
 				{
-					mc = help[i][j];
+					mc = temper[i][j];
 					mi = i;
 					mj = j;
 				}
@@ -142,37 +168,12 @@ void Answer(int*** matrix, int n, int** help, int* path)
 	}
 }
 
-void Preparation(int***& matrix, int& n, int**& help, int*& result)
-{
-	n = amountVerts;
-	help = new int* [n];
-	result = new int[n];
-	matrix = new int** [n];
-	for (int i = 0; i <= n; i++)
-	{
-		help[i] = new int[n];
-	}
-	for (int i = 0; i < n; i++)
-	{
-		matrix[i] = new int* [n];
-		for (int j = 0; j < n; j++)
-		{
-			if (graph.Matrix_temp[i][j] == 0)
-			{
-				matrix[i][j] = nullptr;
-				continue;
-			}
-			matrix[i][j] = new int(graph.Matrix_temp[i][j]);
-		}
-	}
-}
 
-
-void OutResult(int*** matrix, int n, int** help, int* result)
+void Result(int*** matrix, int n, int** temper, int* result)
 {
-	Preparation(matrix, n, help, result);
+	Prep(matrix, n, temper, result);
 	int s = 0;
-	Answer(matrix, n, help, result);
+	Answer(matrix, n, temper, result);
 	cout << "\nОтрезки путей: ";
 	for (int i = 0, j = 0; i < n; i++)
 	{
@@ -205,13 +206,13 @@ void OutResult(int*** matrix, int n, int** help, int* result)
 template<class T>
 vector<T> Graph<T>::GetNeighbors(const T& vertex)
 {
-	vector<T> NeighborsList; // создание списка соседей
-	int vertPos = this->GetVertPos(vertex); // вычисление позиции vertex в матрице смежности
+	vector<T> NeighborsList;
+	int vertPos = this->GetVertPos(vertex);
 	if (vertPos != (-1))
 	{
 		for (int i = 0, vertListSize = this->vertList.size(); i < vertListSize; ++i)
 		{
-			if (this->Matrix_temp[vertPos][i] != 0 && this->Matrix_temp[i][vertPos] != 0) // вычисление соседей
+			if (this->Matrix_temp[vertPos][i] != 0 && this->Matrix_temp[i][vertPos] != 0)
 			{
 				NeighborsList.push_back(this->vertList[i]);
 			}
@@ -230,7 +231,7 @@ void Graph<T>::InsertVertex(const T& vertex)
 		this->vertList.push_back(vertex);
 	}
 	else {
-		cout << "Граф уже заполнен. Невозможно добавить новую вершину " << endl;
+		cout << "Граф заполнен. Невозможно добавить новую вершину " << endl;
 		return;
 	}
 }
@@ -245,23 +246,23 @@ void Graph<T>::DeleteVertex()
 template<class T>
 int Graph<T>::GetAmountEdges()
 {
-	int amount = 0; // обнуляем счетчик
-	if (!this->Empty()) // проверяем, что граф не пуст
+	int amount = 0;
+	if (!this->Empty())
 	{
 		for (int i = 0, vertListSize = this->vertList.size(); i < vertListSize; ++i)
 		{
 			for (int j = 0; j < vertListSize; ++j)
 			{
-				if (this->Matrix_temp[i][j] == this->Matrix_temp[j][i] && this->Matrix_temp[i][j] != 0) // находим рёбра
+				if (this->Matrix_temp[i][j] == this->Matrix_temp[j][i] && this->Matrix_temp[i][j] != 0)
 				{
-					amount += 1; // считаем количество рёбер
+					amount += 1;
 				}
 			}
 		}
-		return (amount / 2); // приводим счетчик к корректному результату и возвращаем его
+		return (amount / 2);
 	}
 	else
-		return 0; // если граф пуст, возвращаем 0
+		return 0;
 }
 
 template<class T>
@@ -296,7 +297,7 @@ bool Graph<T>::Empty()
 template<class T>
 bool Graph<T>::Full()
 {
-	return (vertList.size() == maxSize);
+	return (vertList.size() == mSize);
 }
 
 template <class T>
@@ -315,9 +316,9 @@ int Graph<T>::GetVertPos(const T& vertex)
 template<class T>
 Graph<T>::Graph()
 {
-	for (int i = 0; i < maxSize; ++i)
+	for (int i = 0; i < mSize; ++i)
 	{
-		for (int j = 0; j < maxSize; ++j)
+		for (int j = 0; j < mSize; ++j)
 		{
 			this->Matrix_temp[i][j] = 0;
 		}
@@ -332,24 +333,24 @@ Graph<T>::~Graph()
 
 Graph <int> MakeGraph()
 {
-	Graph <int> graph; // создание графа, содержащего вершины с номерами целого типа
-	int amountEdges, sourceVertex, targetVertex, edgeWeight; // создание необходимых для ввода графа переменных
-	cout << "Введите количество вершин графа: "; cin >> amountVerts; cout << endl; // ввод количества рёбер графа в переменную amountVerts
-	cout << "Введите количество ребер графа: "; cin >> amountEdges; cout << endl; // ввод количества рёбер графа в переменную amountEdges
+	Graph <int> graph;
+	int amountEdges, sourceVertex, targetVertex, edgeWeight;
+	cout << "Введите количество вершин графа: "; cin >> amountVerts; cout << endl;
+	cout << "Введите количество ребер графа: "; cin >> amountEdges; cout << endl;
 	for (int i = 1; i <= amountVerts; ++i)
 	{
-		int* vertPtr = &i; // запоминаем адрес вершины с помощью указателя
-		graph.InsertVertex(*vertPtr); //передаём ссылку на вершину в функцию InsertVertex; происходит вставка вершины в вектор вершин
+		int* vertPtr = &i;
+		graph.InsertVertex(*vertPtr);
 	}
 	for (int i = 0; i < amountEdges; ++i)
 	{
-		cout << "Исходная вершина: "; cin >> sourceVertex; cout << endl; // ввод исходной вершины
-		int* sourceVertPtr = &sourceVertex; // запоминаем адрес исходной вершины
-		cout << "Конечная вершина: "; cin >> targetVertex; cout << endl; // ввод вершины, до которой будет идти ребро от исходной вершины
-		int* targetVertPtr = &targetVertex; // запоминаем адрес конечной вершины (до которой будет идти ребро от исходной вершины)
+		cout << "Исходная вершина: "; cin >> sourceVertex; cout << endl;
+		int* sourceVertPtr = &sourceVertex;
+		cout << "Конечная вершина: "; cin >> targetVertex; cout << endl;
+		int* targetVertPtr = &targetVertex;
 
-		cout << "Вес ребра: "; cin >> edgeWeight; cout << endl; // ввод числового значения веса ребра в переменную edgeWeight
-		graph.InsertEdge(*sourceVertPtr, *targetVertPtr, edgeWeight); // вставка ребра весом edgeWeight между исходной и конечной вершинами
+		cout << "Вес ребра: "; cin >> edgeWeight; cout << endl;
+		graph.InsertEdge(*sourceVertPtr, *targetVertPtr, edgeWeight);
 	}
 	cout << endl;
 	return graph;
@@ -403,17 +404,17 @@ void Graph<T>::Print()
 void SetCoord(int i, int n)
 {
 	int Rtemp;
-	int x0 = win_width / 2;
-	int y0 = win_height / 2;
-	if (win_width > win_height)
+	int x0 = winW / 2;
+	int y0 = winH / 2;
+	if (winW > winH)
 	{
-		R = 5 * (win_height / 13) / n;
-		Rtemp = win_height / 2 - R - 10;
+		R = 5 * (winH / 13) / n;
+		Rtemp = winH / 2 - R - 10;
 	}
 	else
 	{
-		R = 5 * (win_width / 13) / n;
-		Rtemp = win_width / 2 - R - 10;
+		R = 5 * (winW / 13) / n;
+		Rtemp = winW / 2 - R - 10;
 	}
 	float theta = 2.0f * 3.1415926f * float(i) / float(n);
 	float y1 = Rtemp * cos(theta) + y0;
@@ -422,7 +423,7 @@ void SetCoord(int i, int n)
 	vertC[i].y = y1;
 }
 
-void DrawCircle(int x, int y, int R) // Рисуем круги
+void DrawCircle(int x, int y, int R)
 {
 	glColor3f(1.0f, 1.0f, 1.0f);
 	float x1, y1;
@@ -448,7 +449,7 @@ void DrawCircle(int x, int y, int R) // Рисуем круги
 	glEnd();
 }
 
-void DrawText(int nom, int x1, int y1) // Рисуем текст
+void DrawText(int nom, int x1, int y1)
 {
 	GLvoid* font = GLUT_BITMAP_HELVETICA_18;
 	string s = to_string(nom);
@@ -459,7 +460,7 @@ void DrawText(int nom, int x1, int y1) // Рисуем текст
 	}
 }
 
-void DrawVertex(int n) // Рисуем вершины
+void DrawVertex(int n)
 {
 	for (int i = 0; i < n; i++)
 	{
@@ -468,7 +469,7 @@ void DrawVertex(int n) // Рисуем вершины
 	}
 }
 
-void DrawLine(int text, int x0, int y0, int x1, int y1) // Рисуем ребра неориентированного взвешенного графа
+void DrawLine(int text, int x0, int y0, int x1, int y1)
 {
 	glClearColor(0.0, 0.0, 1.0, 0.0);
 	glBegin(GL_LINES);
@@ -480,7 +481,7 @@ void DrawLine(int text, int x0, int y0, int x1, int y1) // Рисуем ребр
 
 
 template<class T>
-void Graph<T>::DrawGraph() // Рисуем граф
+void Graph<T>::DrawGraph()
 {
 	int n = vertList.size();
 	for (int i = 0; i < n; i++)
@@ -503,16 +504,16 @@ void Graph<T>::DrawGraph() // Рисуем граф
 
 void Change(int w, int h)
 {
-	win_width = w;
-	win_height = h;
-	glViewport(0, 0, (GLsizei)win_width, (GLsizei)win_height);
+	winW = w;
+	winH = h;
+	glViewport(0, 0, (GLsizei)winW, (GLsizei)winH);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(0, (GLdouble)win_width, 0, (GLdouble)win_height);
+	gluOrtho2D(0, (GLdouble)winW, 0, (GLdouble)winH);
 	glutPostRedisplay();
 }
 
-void DrawMenuText(string text, int x1, int y1) // Рисуем текст меню
+void DrawMenuText(string text, int x1, int y1)
 {
 	GLvoid* font = GLUT_BITMAP_HELVETICA_18;
 	string s = text;
@@ -523,60 +524,60 @@ void DrawMenuText(string text, int x1, int y1) // Рисуем текст мен
 	}
 }
 
-void DrawMenu() // Рисуем меню
+void DrawMenu()
 {
-	int height = win_height;
+	int height = winH;
 
-	glColor3f(0.0f, 0.5f, 1.0f);
+	glColor3f(0.4f, 0.8f, 0.5f);
 	glBegin(GL_QUADS);
-	glVertex2i(10, win_height - 50);
-	glVertex2i(10, win_height - 100);
-	glVertex2i(150, win_height - 100);
-	glVertex2i(150, win_height - 50);
+	glVertex2i(10, winH - 50);
+	glVertex2i(10, winH - 100);
+	glVertex2i(150, winH - 100);
+	glVertex2i(150, winH - 50);
 	glEnd();
 	glColor3d(0, 0, 0);
-	DrawMenuText("New vertex", 30, win_height - 80);
+	DrawMenuText("Add vertex", 30, winH - 80);
 
-	glColor3f(0.0f, 0.5f, 1.0f);
+	glColor3f(0.4f, 0.8f, 0.5f);
 	glBegin(GL_QUADS);
-	glVertex2i(10, win_height - 150);
-	glVertex2i(10, win_height - 200);
-	glVertex2i(150, win_height - 200);
-	glVertex2i(150, win_height - 150);
+	glVertex2i(10, winH - 150);
+	glVertex2i(10, winH - 200);
+	glVertex2i(150, winH - 200);
+	glVertex2i(150, winH - 150);
 	glEnd();
 	glColor3d(0, 0, 0);
-	DrawMenuText("Delete vertex", 25, win_height - 180);
+	DrawMenuText("Delete vertex", 25, winH - 180);
 
 
-	glColor3f(0.0f, 0.5f, 1.0f);
+	glColor3f(0.4f, 0.8f, 0.5f);
 	glBegin(GL_QUADS);
-	glVertex2i(10, win_height - 250);
-	glVertex2i(10, win_height - 300);
-	glVertex2i(150, win_height - 300);
-	glVertex2i(150, win_height - 250);
+	glVertex2i(10, winH - 250);
+	glVertex2i(10, winH - 300);
+	glVertex2i(150, winH - 300);
+	glVertex2i(150, winH - 250);
 	glEnd();
 	glColor3d(0, 0, 0);
-	DrawMenuText("Matrix", 50, win_height - 280);
+	DrawMenuText("Matrix", 50, winH - 280);
 
-	glColor3f(0.0f, 0.5f, 1.0f);
+	glColor3f(0.4f, 0.8f, 0.5f);
 	glBegin(GL_QUADS);
-	glVertex2i(10, win_height - 350);
-	glVertex2i(10, win_height - 400);
-	glVertex2i(150, win_height - 400);
-	glVertex2i(150, win_height - 350);
+	glVertex2i(10, winH - 350);
+	glVertex2i(10, winH - 400);
+	glVertex2i(150, winH - 400);
+	glVertex2i(150, winH - 350);
 	glEnd();
 	glColor3d(0, 0, 0);
-	DrawMenuText("Result", 50, win_height - 380);
+	DrawMenuText("Result", 50, winH - 380);
 
-	glColor3f(0.0f, 0.5f, 1.0f);
+	glColor3f(0.4f, 0.8f, 0.5f);
 	glBegin(GL_QUADS);
-	glVertex2i(10, win_height - 450);
-	glVertex2i(10, win_height - 500);
-	glVertex2i(150, win_height - 500);
-	glVertex2i(150, win_height - 450);
+	glVertex2i(10, winH - 450);
+	glVertex2i(10, winH - 500);
+	glVertex2i(150, winH - 500);
+	glVertex2i(150, winH - 450);
 	glEnd();
 	glColor3d(0, 0, 0);
-	DrawMenuText("New Graph", 35, win_height - 480);
+	DrawMenuText("New Graph", 35, winH - 480);
 }
 
 void MouseClick(int btn, int stat, int x, int y)
@@ -621,7 +622,7 @@ void MouseClick(int btn, int stat, int x, int y)
 		}
 		if (x > 10 && x < 150 && y >  350 && y < 400)
 		{
-			OutResult(matrix, n, help, result);
+			Result(matrix, n, temper, result);
 		}
 		if (x > 10 && x < 150 && y >  450 && y < 500)
 		{
@@ -636,9 +637,9 @@ void Display()
 	glShadeModel(GL_SMOOTH);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(0, win_width, 0, win_height); //ставим начало координат в левый нижний угол
-	glViewport(0, 0, win_width, win_height);
-	glClearColor(1.0, 1.0, 1.0, 1.0);
+	gluOrtho2D(0, winW, 0, winH);
+	glViewport(0, 0, winW, winH);
+	glClearColor(1.0, 1.0, 0.6, 0.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	graph.DrawGraph();
@@ -652,10 +653,10 @@ int main(int argc, char* argv[])
 	glutInit(&argc, argv);
 	graph = MakeGraph();
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowSize(1270, 720);
+	glutInitWindowSize(900, 600);
 	glutCreateWindow("Graph");
-	win_width = glutGet(GLUT_WINDOW_WIDTH);
-	win_height = glutGet(GLUT_WINDOW_HEIGHT);
+	winW = glutGet(GLUT_WINDOW_WIDTH);
+	winH = glutGet(GLUT_WINDOW_HEIGHT);
 	glutDisplayFunc(Display);
 	glutReshapeFunc(Change);
 	glutMouseFunc(MouseClick);
