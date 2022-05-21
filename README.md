@@ -1,8 +1,8 @@
 >**В папках лежат файлы, которые нужны для VS2019. Программы для запуска лежать в файлах с расширением .cpp**
 ***
 <h1>Творческие задания (Вариант 5)</h1>
-Калькулятор - 
-Задача коммивояжёра - 
+Калькулятор - <br>
+Задача коммивояжёра - https://github.com/MaximVozisov/Labs_PSTU/blob/main/TravelSalesman/TravelSalesman.cpp<br>
 ***
 <h2>Олимпиандные задачи на 30.10.2021</h2>
 1 - https://github.com/MaximVozisov/Labs_PSTU/blob/main/N1/N1.cpp<br>
