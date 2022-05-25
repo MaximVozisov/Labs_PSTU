@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cmath>
+
 namespace Ñalculator {
 
 	using namespace System;
@@ -14,6 +16,7 @@ namespace Ñalculator {
 	public:
 		Calculator(void)
 		{
+			TopMost = true;
 			InitializeComponent();
 			textBox9->ReadOnly = true;
 			textBox8->ReadOnly = true;
@@ -47,7 +50,12 @@ namespace Ñalculator {
 		{
 			return n1 * n2 / NOD(n1, n2);
 		}
-
+	public:
+		int sokr(int a, int b) {
+			a = abs(a), b = abs(b);
+			if (b == 0)return a;
+			else return sokr(b, a % b);
+		}
 	private: System::Windows::Forms::TextBox^ textBox4;
 	private: System::Windows::Forms::TextBox^ textBox5;
 	private: System::Windows::Forms::TextBox^ textBox6;
@@ -78,9 +86,9 @@ namespace Ñalculator {
 	private: System::Windows::Forms::Button^ button4;
 	private: System::Windows::Forms::Button^ button5;
 	private: System::Windows::Forms::Button^ button6;
-	private: System::Windows::Forms::Label^ label2;
-	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::Label^ label4;
+
+
+
 	private: System::Windows::Forms::Label^ labelError;
 	private: System::ComponentModel::Container ^components;
 
@@ -118,9 +126,6 @@ namespace Ñalculator {
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->button5 = (gcnew System::Windows::Forms::Button());
 			this->button6 = (gcnew System::Windows::Forms::Button());
-			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->labelError = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
@@ -272,7 +277,7 @@ namespace Ñalculator {
 			// 
 			this->comboBox1->FormattingEnabled = true;
 			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"+", L"-", L"*", L"/" });
-			this->comboBox1->Location = System::Drawing::Point(135, 40);
+			this->comboBox1->Location = System::Drawing::Point(139, 40);
 			this->comboBox1->Name = L"comboBox1";
 			this->comboBox1->Size = System::Drawing::Size(33, 21);
 			this->comboBox1->TabIndex = 4;
@@ -380,7 +385,7 @@ namespace Ñalculator {
 			// 
 			this->label1->AutoSize = true;
 			this->label1->BackColor = System::Drawing::Color::Transparent;
-			this->label1->Location = System::Drawing::Point(283, 43);
+			this->label1->Location = System::Drawing::Point(288, 43);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(13, 13);
 			this->label1->TabIndex = 34;
@@ -436,36 +441,6 @@ namespace Ñalculator {
 			this->button6->UseVisualStyleBackColor = false;
 			this->button6->Click += gcnew System::EventHandler(this, &Calculator::button6_Click);
 			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->BackColor = System::Drawing::Color::Transparent;
-			this->label2->Location = System::Drawing::Point(22, 43);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(10, 13);
-			this->label2->TabIndex = 39;
-			this->label2->Text = L"-";
-			// 
-			// label3
-			// 
-			this->label3->AutoSize = true;
-			this->label3->BackColor = System::Drawing::Color::Transparent;
-			this->label3->Location = System::Drawing::Point(177, 43);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(10, 13);
-			this->label3->TabIndex = 40;
-			this->label3->Text = L"-";
-			// 
-			// label4
-			// 
-			this->label4->AutoSize = true;
-			this->label4->BackColor = System::Drawing::Color::Transparent;
-			this->label4->Location = System::Drawing::Point(299, 43);
-			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(10, 13);
-			this->label4->TabIndex = 41;
-			this->label4->Text = L"-";
-			// 
 			// labelError
 			// 
 			this->labelError->AutoSize = true;
@@ -484,9 +459,6 @@ namespace Ñalculator {
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(416, 203);
 			this->Controls->Add(this->labelError);
-			this->Controls->Add(this->label4);
-			this->Controls->Add(this->label3);
-			this->Controls->Add(this->label2);
 			this->Controls->Add(this->button6);
 			this->Controls->Add(this->button5);
 			this->Controls->Add(this->button4);
@@ -537,9 +509,6 @@ bool l3 = false;
 private: System::Void Calculator_Load(System::Object^ sender, System::EventArgs^ e) {
 	Size = System::Drawing::Size(432, 196);
 	labelError->Visible = false;
-	label2->Visible = false;
-	label3->Visible = false;
-	label4->Visible = false;
 	n0->Visible = false;
 	n1->Visible = false;
 	n2->Visible = false;
@@ -664,7 +633,6 @@ private: System::Void n9_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void button2_Enter(System::Object^ sender, System::EventArgs^ e) {
 	labelError->Visible = false;
-	label4->Visible = false;
 	textBox9->Text = "";
 	textBox8->Text = "";
 	textBox7->Text = "";
@@ -683,7 +651,6 @@ private: System::Void button2_Enter(System::Object^ sender, System::EventArgs^ e
 			if (n6 + n3 < 0)
 			{
 				textBox9->Text = System::Convert::ToString(-(n6 + n3));
-				label4->Visible = true;
 			}
 			else textBox9->Text = System::Convert::ToString(n6 + n3);
 			break;
@@ -691,7 +658,6 @@ private: System::Void button2_Enter(System::Object^ sender, System::EventArgs^ e
 			if (n6 - n3 < 0)
 			{
 				textBox9->Text = System::Convert::ToString(-(n6 - n3));
-				label4->Visible = true;
 			}
 			else textBox9->Text = System::Convert::ToString(n6 + n3);
 			break;
@@ -699,7 +665,6 @@ private: System::Void button2_Enter(System::Object^ sender, System::EventArgs^ e
 			if (n6 * n3 < 0)
 			{
 				textBox9->Text = System::Convert::ToString(-(n6 * n3));
-				label4->Visible = true;
 			}
 			else textBox9->Text = System::Convert::ToString(n6 * n3);
 			break;
@@ -713,6 +678,7 @@ private: System::Void button2_Enter(System::Object^ sender, System::EventArgs^ e
 				int cel = chis / znam;
 				if (!cel)
 				{
+					û
 					textBox8->Text = System::Convert::ToString(chis);
 					textBox7->Text = System::Convert::ToString(znam);
 				}
@@ -819,11 +785,8 @@ private: System::Void clear_Click(System::Object^ sender, System::EventArgs^ e) 
 	textBox9->Text = "";
 	comboBox1->Text = "";
 	enter = 0;
-	label2->Visible = false;
 	l2 = false;
-	label3->Visible = false;
 	l3 = false;
-	label4->Visible = false;
 }
 private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) {
 	Size = System::Drawing::Size(432, 242);
@@ -906,24 +869,20 @@ private: System::Void textBox4_KeyPress(System::Object^ sender, System::Windows:
 private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (l2)
 	{
-		label2->Visible = false;
 		l2 = false;
 	}
 	else
 	{
-		label2->Visible = true;
 		l2= true;
 	}
 }
 private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (l3)
 	{
-		label3->Visible = false;
 		l3 = false;
 	}
 	else
 	{
-		label3->Visible = true;
 		l3 = true;
 	}
 }
