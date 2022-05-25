@@ -640,10 +640,6 @@ private: System::Void button2_Enter(System::Object^ sender, System::EventArgs^ e
 	{
 		int n3 = Int32::Parse(textBox3->Text);
 		int n6 = Int32::Parse(textBox6->Text);
-		if (l2)
-			n3 = -n3;
-		if (l3)
-			n6 = -n6;
 		char znak = comboBox1->Text[0];
 		switch (znak)
 		{
@@ -671,6 +667,9 @@ private: System::Void button2_Enter(System::Object^ sender, System::EventArgs^ e
 		case '/':
 			int chis = n3;
 			int znam = n6;
+			int x = sokr(chis, znam);
+			chis /= x;
+			znam /= x;
 			if (chis % znam == 0)
 				textBox9->Text = System::Convert::ToString(chis / znam);
 			else
@@ -678,7 +677,7 @@ private: System::Void button2_Enter(System::Object^ sender, System::EventArgs^ e
 				int cel = chis / znam;
 				if (!cel)
 				{
-					û
+					int x = sokr(chis, znam);
 					textBox8->Text = System::Convert::ToString(chis);
 					textBox7->Text = System::Convert::ToString(znam);
 				}
@@ -726,26 +725,27 @@ private: System::Void button2_Enter(System::Object^ sender, System::EventArgs^ e
 	{
 		n3 = Int32::Parse(textBox3->Text);
 		n2 = n2 + n1 * n3;
-		if (l2)
-			n2 = -n2;
 	}
 	if ((textBox6->Text != "") && (textBox3->Text != "0"))
 	{
 		n6 = Int32::Parse(textBox6->Text);
 		n5 = n5 + n4 * n6;
-		if (l3)
-			n5 = -n5;
 	}
 	int chis1 = (n2 * (nok / n1));
 	int chis2 = (n5 * (nok / n4));
 	int chisPlus = chis1 + chis2;
+	int nokHelp = nok;
+	int x = sokr(chisPlus, nokHelp);
+	chisPlus /= x;
+	nokHelp /= x;
 	switch (znak)
 	{
 	case '+':
 		if (chisPlus < nok)
 		{
+			int x = sokr(chisPlus, nok);
 			textBox8->Text = System::Convert::ToString(chisPlus);
-			textBox7->Text = System::Convert::ToString(nok);
+			textBox7->Text = System::Convert::ToString(nokHelp);
 		}
 		if (chisPlus > nok)
 		{
