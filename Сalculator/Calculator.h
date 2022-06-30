@@ -86,9 +86,6 @@ namespace Ñalculator {
 	private: System::Windows::Forms::Button^ button4;
 	private: System::Windows::Forms::Button^ button5;
 	private: System::Windows::Forms::Button^ button6;
-
-
-
 	private: System::Windows::Forms::Label^ labelError;
 	private: System::ComponentModel::Container ^components;
 
@@ -724,12 +721,12 @@ private: System::Void button2_Enter(System::Object^ sender, System::EventArgs^ e
 	if ((textBox3->Text != "") && (textBox3->Text != "0"))
 	{
 		n3 = Int32::Parse(textBox3->Text);
-		n2 = n2 + n1 * n3;
+		n2 += n1 * n3;
 	}
 	if ((textBox6->Text != "") && (textBox3->Text != "0"))
 	{
 		n6 = Int32::Parse(textBox6->Text);
-		n5 = n5 + n4 * n6;
+		n5 += n4 * n6;
 	}
 	int chis1 = (n2 * (nok / n1));
 	int chis2 = (n5 * (nok / n4));
@@ -743,18 +740,22 @@ private: System::Void button2_Enter(System::Object^ sender, System::EventArgs^ e
 	case '+':
 		if (chisPlus < nok)
 		{
-			int x = sokr(chisPlus, nok);
 			textBox8->Text = System::Convert::ToString(chisPlus);
 			textBox7->Text = System::Convert::ToString(nokHelp);
 		}
 		if (chisPlus > nok)
 		{
-			textBox9->Text = System::Convert::ToString(chisPlus / nok);
-			textBox8->Text = System::Convert::ToString(chisPlus - nok * (chisPlus / nok));
-			textBox7->Text = System::Convert::ToString(nok);
+			textBox9->Text = System::Convert::ToString(chisPlus / nokHelp);
+			textBox8->Text = System::Convert::ToString(chisPlus - nokHelp * (chisPlus / nokHelp));
+			textBox7->Text = System::Convert::ToString(nokHelp);
 		}
-		if ((chisPlus = nok) && (textBox3->Text != "") && (textBox6->Text != ""))
+		if (chisPlus = nok)
 			textBox9->Text = System::Convert::ToString(n3 + n6 + 1);
+		if (textBox8->Text == "0")
+		{
+			textBox8->Text = "";
+			textBox7->Text = "";
+		}
 		break;
 	case '-':
 		textBox8->Text = System::Convert::ToString(nok);
