@@ -10,7 +10,9 @@ namespace ЛабаN1
     {
         static void Main(string[] args)
         {
+            int s=5;
             Console.WriteLine("Hello world!");
+            Console.WriteLine($"S = {s}");
         }
     }
 }
